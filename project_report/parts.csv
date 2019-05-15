@@ -1,0 +1,7 @@
+Item,quantity,description
+(10x4.5) Propellers,"2CW, 2CCW",Propellers of size 10x4.5(diameter x angle of twist)
+3DR Single mini radio telemetry 433Mhz 250mW for Pixhawk,1,Telemetry sensor
+1000KV Brushless DC motors,4,A2212 Brushless DC motors
+Simonk 30A ESCs,4,Electronic Speed Controllers used for controling Brushless DC motors
+Flysky FS-i6S 2.4GHz 10CH AFHDS 2A RC transmitter,1,The transmitter used to send control inputs to the quadrotor
+FS-iA10B 10CH Receiver,1,On-board receiver to receive control inputs from transmitter

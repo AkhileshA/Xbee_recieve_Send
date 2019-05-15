@@ -1,0 +1,9 @@
+PWD /home/ravi/project/quadrotor-control-and-simulation/project_report/chapters
+INPUT /etc/texmf/web2c/texmf.cnf
+INPUT /usr/share/texmf/web2c/texmf.cnf
+INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
+INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
+INPUT /home/ravi/project/quadrotor-control-and-simulation/project_report/chapters/model.tex
+OUTPUT /home/ravi/project/quadrotor-control-and-simulation/project_report/chapters/model.log
+OUTPUT /home/ravi/project/quadrotor-control-and-simulation/project_report/chapters/model.pdf
+INPUT /var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map

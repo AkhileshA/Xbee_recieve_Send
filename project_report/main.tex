@@ -1,0 +1,95 @@
+\documentclass[12pt, oneside]{report}
+\usepackage[a4paper, width=160mm, height=245mm, top=15mm, bottom=22mm, left=30mm, right=20mm, head=3mm, foot=10mm]{geometry}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{setspace}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath, amssymb}
+\usepackage{tabu}
+
+\usepackage{booktabs} % For \toprule, \midrule and \bottomrule
+\usepackage{siunitx} % Formats the units and values
+\usepackage{pgfplotstable} % Generates table from .csv
+
+% Setup siunitx:
+\sisetup{
+  round-mode          = places, % Rounds numbers
+  round-precision     = 2, % to 2 places
+}
+% \usepackage[utf8]{inputenc}
+% \usepackage[english]{babel}
+
+% \usepackage{biblatex}
+% \addbibresource{bibliography/bibliography.bib}
+
+\renewcommand{\baselinestretch}{1.5}
+\setlength{\parindent}{2.5cm}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead[LE]{\slshape \rightmark} %section
+\fancyhead[RE]{\thepage}
+\fancyhead[RO]{\slshape \leftmark} % chapter
+\fancyhead[LO]{\thepage}
+\fancyfoot[CE, CO]{\thepage}
+\fancyfoot[LE, LO]{Quadrotor control & design}
+\fancyfoot[RE, RO]{ECE F366}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+\title{EEE F343 - Power Electronics
+Mini Project
+}
+
+\author{Akhilesh Aluvala}
+
+\date{2019}
+
+\pagenumbering{roman}
+\setcounter{tocdepth}{4}
+
+\begin{document}
+\setlength{\abovedisplayskip}{1pt}
+\setlength{\belowdisplayskip}{1pt}
+\input{chapters/Title}
+
+\chapter*{Abstract}
+\input{chapters/Abstract}
+\addcontentsline{toc}{chapter}{\numberline{}Abstract}
+
+\cleardoublepage
+
+% \listoftables
+% \thispagestyle{empty}
+
+\thispagestyle{empty}
+
+\pagenumbering{arabic}
+\chapter{Introduction}
+\input{chapters/Introduction}
+
+\chapter{Methodology}
+\input{chapters/Methodology}
+
+\chapter{Data Transmission}
+\input{chapters/trans}
+
+
+\chapter{Observations and Results}
+\input{chapters/observations}
+
+
+\chapter{Conclusion}
+\input{chapters/conclusion}
+
+
+% \bibliographystyle{IEEEtran}
+%\bibliography{bibliography/bibliography.bib}
+
+%\pagebreak
+%\input{chapters/declaration}
+
+\end{document}

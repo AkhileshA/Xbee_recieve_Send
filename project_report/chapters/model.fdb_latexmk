@@ -1,0 +1,15 @@
+# Fdb version 3
+["pdflatex"] 1551941840 "model.tex" "/home/ravi/project/quadrotor-control-and-simulation/project_report/chapters/model.pdf" "model" 1551941841
+  "/etc/texmf/web2c/texmf.cnf" 1551289347 475 c0e671620eb5563b2130f56340a5fde8 ""
+  "/home/ravi/project/quadrotor-control-and-simulation/project_report/chapters/model.aux" 1551901901 39 2c18efc5b8f31fd879f581aa9857af77 ""
+  "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1520210507 32485 c64754543d8ac501bea6e75e209ea521 ""
+  "/usr/share/texmf/web2c/texmf.cnf" 1520210507 32485 c64754543d8ac501bea6e75e209ea521 ""
+  "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1551289474 2700761 ac0584cc9514ab21918550a6948c4ee2 ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1551289523 4127155 4a7f2e306d42ebf7c189dcd531f49bd4 ""
+  "model.tex" 1551912568 7791 0c42c8507c74cc6e89a9665acc9a346a ""
+  (generated)
+  "/home/ravi/project/quadrotor-control-and-simulation/project_report/chapters/model.log"
+  "model.aux"
+  "model.log"
+  "/home/ravi/project/quadrotor-control-and-simulation/project_report/chapters/model.pdf"
+  "model.pdf"

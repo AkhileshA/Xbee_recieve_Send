@@ -1,0 +1,78 @@
+\section{PD controller}
+To stabilize the quadcopter, a PD(proportional and derivative) controller is used. the advantages of the PD control is the simple structure and easy implementation of the controller. The general form of the controller is give by
+\begin{align*}
+  e(t) & = x_d(t) -x(t),\\
+  u(t) & = K_Pe(t) + K_D\frac{de(t)}{dt}
+\end{align*}
+We can also add the integral term to account for the modelling errors or any external factors.
+\begin{align*}
+  u(t) & = K_Pe(t) + K_D\frac{de(t)}{dt} +K_I \int e(t)dt
+\end{align*}
+Here $u(t)$ is the control input and $e(t)$ is the difference between the desired state and the current state of $x(t)$ \\
+
+In a quadrotor, there are six states, but only four control inputs. The interaction between the states and the forces and torques produces by the motors can be seen in the dynamic equations. The Thrust is used to control the acceleration of the robot in the z direction while the moments are used to control the yaw, pitch and roll angles.Hence the PD controller is choosen as follows.
+\begin{align*}
+  F & = (g + K_{z,D}(\dot{z_d} - \dot{z}) + K_{z,P}(z_d -z))\frac{m}{\cos(\phi)\cos(\theta)}\\
+  \tau_\phi & = ( K_{\phi,D}(\dot{\phi_d} - \dot{\phi}) + K_{\phi,P}(\phi_d - \phi) )I_{xx}\\
+  \tau_\theta & = ( K_{\theta,D}(\dot{\theta_d} - \dot{\theta}) + K_{\theta,P}(\theta_d - \theta) )I_{yy}\\
+  \tau_\psi & = ( K_{\psi,D}(\dot{\psi_d} - \dot{\psi}) + K_{\psi,P}(\psi_d - \psi) )I_{zz}\\
+\end{align*}
+
+\noindent
+And now the angular velocities of each motor can be calculated by the obtained commanded value of the thrust and moments and the dynamis equations.
+\begin{align*}
+  \omega_1^2 = \frac{T}{4d} - \frac{\tau_\theta}{2dl} - \frac{\tau_\psi}{4b} \\
+  \omega_2^2 = \frac{T}{4d} - \frac{\tau_\phi}{2dl} + \frac{\tau_\psi}{4b} \\
+  \omega_3^2 = \frac{T}{4d} + \frac{\tau_\theta}{2dl} - \frac{\tau_\psi}{4b} \\
+  \omega_4^2 = \frac{T}{4d} + \frac{\tau_\phi}{2dl} + \frac{\tau_\psi}{4b} \\
+\end{align*}
+\newline
+The block diagram of the control strategy followed in the implementation of the PID controlled in MATLAB is as given in Figure ~\ref{fig:block_diagram}. Where :
+\begin{itemize}
+  \item u\textsubscript{1} and u\textsubscript{2} are the control inputs.
+  \item R is the rotation matrix.
+  \item R\textsubscript{des} is the desired rotation matrix.
+  \item r is the vector containing positions in the three directions.
+  \item $\dot{r}$ is the vector containing velocities in the three directions.
+  \item z\textsubscript{des} is the desired height
+\end{itemize}
+
+\begin{figure}[H]
+  \centering
+  \noindent\makebox[\textwidth]{\includegraphics[width=\paperwidth]{images/block}}
+  \caption{Block diagram of control strategy followed}
+  \label{fig:block_diagram}
+\end{figure}
+
+\section{Linear Quadratic Regulator(LQR)}
+Linear quadratic regulator (LQR) is one of the most commonly used optimal control techniques for linear systems.This control method takes into account a cost function which depends on the states of the dynamical system and control input to make the optimal control decisions.
+\subsection{Objective of LQR}
+LQR is an optimal control that minimizes an objective function to obtain a steady solution for the feedback gain K. The cost function is quadratic in nature to prevent negative errors. This also results in the amplification of large errors. LQR uses full state feedback.
+\subsection{Procedure followed}
+We use two cost matrices to penalize the state of each state and input relative to other states and inputs.
+\begin{equation*}
+  J = \int^\infty_0 (x^TQx + u^T Ru)dt
+\end{equation*}
+$Q$ - Weight matrix penalizing(weighting) the state matrix, Positive(semi-) definite matrix.\\
+$R$ - Weight matrix penalizing(weighting) the inputs, Positive(semi-) definite matrix.\\
+$P$ - Solution to the algebraic Riccati equation.
+\newpage
+\paragraph{Algebraic Riccati equation}
+\begin{equation*}
+  PAx + A^TPx + Qx - PBR^{-1}B^TPx +\dot{P} = 0
+\end{equation*}
+The feedback gain $K$ is obtained by solving the following equation
+\begin{equation}
+K_c = R^{-1}B^TP
+\end{equation}
+
+The matrices Q and R are initialized as diagonal matrices for an LTI system and the values are changed according to the required priority of weights of the state vector and the inputs.\\
+
+Hence, the optimal Q and R are chosen according to our priority requirements that would make cost function J converge the fastest. Once J converges, the system reaches steady state.
+\section{Advantages of LQR}
+\begin{enumerate}
+  \item Static gain -
+  Unique solution for feedback gain K.
+\item Robustness -
+ LQR ensures Infinite Gain margin and Phase Margin $>$ 60 degrees.
+\end{enumerate}

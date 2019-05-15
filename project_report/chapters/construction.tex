@@ -1,0 +1,95 @@
+After the simulations have been successfully performed using PID and LQR controllers and satisfactory results
+had been achieved, the next aim of the project was to construct a quadrotor. The following section describes
+the steps used to construct the quadrotor.
+
+\section{Parts used}
+
+\begin{tabu} to 1\textwidth { | X[c] | X[c] | X[c] | }
+  \hline
+  Part Used & Quantity & Description \\
+  \hline \hline
+  (10x4.5) Propellers & 2CW and 2CCW  & Propellers of size 10x4.5(diameter x angle of twist)\\
+  \hline
+  3DR Single mini radio telemetry 433Mhz 250mW for Pixhawk & 1 & Telemetry sensor\\
+  \hline
+  1000KV Brushless DC motors & 4 & A2212 Brushless DC motors\\
+  \hline
+  Simonk 30A ESCs & 4 & Electronic Speed Controllers used for controling Brushless DC motors\\
+  \hline
+  Flysky FS-i6S 2.4GHz 10CH AFHDS 2A RC transmitter & 1 & The transmitter used to send control inputs to the quadrotor\\
+  \hline
+  FS-iA10B 10CH Receiver & 1 & On-board receiver to receive control inputs from transmitter\\
+  \hline
+  Anti-vibration shock absorber for Pixhawk & 1 & Shock absorber for the flight contoller\\
+  \hline
+  100A ESC power distribution board & 1 & Used to supply power to the ESCs from the battery\\
+  \hline
+\end{tabu}
+\newpage
+\noindent
+\begin{tabu} to 1\textwidth { | X[c] | X[c] | X[c] | }
+  \hline
+  Part Used & Quantity & Description \\
+  \hline \hline
+  Q450 quadcopter frame + landing gear & 1 & The chasis and landing gear used to build the quadcopter\\
+  \hline
+  XL4015 step down converter & 1 & Step down converter used on board to convert 12V supply to 5V\\
+  \hline
+  Pixhawk power module & 1 & Module to supply power to Pixhawk\\
+  \hline
+  Orange 3000mAh 3S 30C/60C LiPo & 1 & Battery used to power the quadrotor\\
+  \hline \hline
+\end{tabu}
+
+\section{Assenmbly of Parts}
+Following the procurement of the parts, the quadrotor was assembled. The assembly procedure is breifly described in the following section.
+\begin{itemize}
+  \item \textbf{Step 1 :} Assemble the chassis by using approprite screws provided and the equipment necessary
+  \item \textbf{Step 2 :} Screw the Brushless DC motors onto the chassis
+  \item \textbf{Step 3 :} Plug on end of each of the 4 ESCs into the motors and the other end into the power distribution board
+  \item \textbf{Step 4 :} Connect the signal wires from the ESCs to the Pixhawk flight controller
+  \item \textbf{Step 5 :} Connect the Pixhawk to the on board receiver
+  \item \textbf{Step 6 :} Open up the transmitter and remove the spring in the left analog stick so that it is desirable to use as a throttle controller(does not auto center)
+  \item \textbf{Step 7 :} Connect the LiPo to the power distribution board and also power the Pixhawk using the Pixhawk power module
+\end{itemize}
+
+This concludes the physical assembly of the quadrotor. Now the quadrotor has to be caliberated and tuned to complete its assembly.
+
+\section{Caliberation and Tuning}
+The quadrotor is caliberated in two steps :
+\begin{itemize}
+  \item \textbf{Step 1 :} Caliberate the gyroscope of the flight controller
+  \item \textbf{Step 2 :} Caliberate the ESCs on the quadrotor
+\end{itemize}
+
+The controller being used by the quadrotor is the PID controller. The PID controller requires tuning of the P, I and D values to exhibit stable flight(response). The values are tuned by trial and error methods and intuition about how change in P,I or D will affect the flight. The final set of PID values are :
+\begin{itemize}
+  \item \textbf{Yaw :}
+    \begin{itemize}
+      \item P - 0.2
+      \item I - 0.02
+      \item D - 0.004
+    \end{itemize}
+
+  \item \textbf{Pitch :}
+    \begin{itemize}
+      \item P - 0.15
+      \item I - 0.1
+      \item D - 0.004
+    \end{itemize}
+
+  \item \textbf{Roll :}
+    \begin{itemize}
+      \item P - 0.15
+      \item I - 0.1
+      \item D - 0.004
+    \end{itemize}
+
+  \item \textbf{Throttle :}
+    \begin{itemize}
+      \item P - 0.75
+      \item I - 1.5
+      \item D - 0.1
+    \end{itemize}
+
+\end{itemize}

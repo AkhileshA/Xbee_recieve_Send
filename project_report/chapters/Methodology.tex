@@ -1,0 +1,32 @@
+\section{Data Aquisition}
+Data acquisition (DAQ) is the process of measuring any phenomenon such as voltage, current etc. using computer. A Data Acquisition System includes sensors, DAQ measurement hardware, and a Personal Computer which has programmable software. PC-based DAQ systems use the connectivity capabilities, processing power of high-level computers which provides powerful and cost-effective measurement solution DAQs are used to transmit data from the sensors to raspberry using wired connection.\\
+\section{Data Processing}
+Based on sampling frequency ,the data is processed. After that, data features are extracted and transmit relevant features through wireless connection. Here DAQ sampling frequency is set to 10 kHz and three current measures at this frequency. Transmitting data at such high frequency through wireless medium is not economic so data processing is required. So the data is processed such that it is useful and sufficient enough for our machine learning model to identify the fault at the same time it is capable of transmission through Zigbee. Zigbee has its own practical limit to transmit data from one end to other.\\
+To identify the required features feature selection is performed. Out of 10000 data points, features of every 1000 data points is formed. Following statistical features for training models were used to select features.\\
+\paragraph{Mean(\overline x)}
+The arithmetic mean (or simply mean) of a sample , is the sum of the sampled values divided by the number of items in the example.
+\paragraph{Standard Deviation(\sigma)}
+The Standard Deviation is a measure of how spread out numbers are.Its symbol is σ(the greek letter sigma).
+\paragraph{Skewness}
+Skewness essentially measures the relative size of the two tails.
+\paragraph{Shape factor}
+It is the  value that is affected by an object's Shape but is independent of its dimension.
+\paragraph{Impulse factor}
+It is the maximum value divided by the mean of the absolute values of data entries.
+\paragraph{Margin Factor}
+It is the maximum value divided by the square of the mean of the absolute values of data entries.
+\paragraph{Current}
+ current source of I1,I2,I3 are considered as 3 separate categorical features.
+ \newline
+ \newline
+ Apart from this \textbf{max value} ,\textbf{min value} and \textbf{pk-pk} value are also used as features.\\
+\newline
+ Feature selection is done on basis of F score of Analysis of Variance test.(ANOVA test). It assigns score to every feature and best k features are selected on that basis.\\
+\newline
+ Feature selection can also be done by selecting all possible subsets of features and then measuring the performance on basis of some metric such as accuracy, precision F1 score, recall, etc. For skewed data set we keep F1 measure is generally used while for balanced data set we use accuracy. This is computationally difficult due to exponential rise in complexity with increase in number of features. Feed forward or feed backward algorithms are also used which are greedy approaches and do not guarantee that best subset would be selected.Feed forward algorithm starts with one feature, measures the performance based on some fixed performance parameters and the one with the best performance is selected and then features are added one by one to that set. This is a greedy approach.\\
+\section{Classification Models}
+ Artificial Neural network, Support vector Machine and random forest models are used for Fault Detection and Diagnosis.
+\paragraph{Support Vector Machine}
+ If a plot of two label classes on a graph is given  and separator line for the classes is to be drawn , then this algorithm is useful. This is a learning model which uses learning algorithms to analyze data is used for regression analysis. It assigns new examples to the training data set which belongs to one category or other.This model represents examples to the points in space such that examples of different categories are separated by a clear and wide gap.And based on which side of the gap they fall, new examples are assigned their categories.
+\paragraph{Random Forest Model}
+This is one of the most popular supervised machine learning algorithm in machine learning. It is basically used for doing both- it performs classification as well as regression part, which is the major part of current machine learning models.\\

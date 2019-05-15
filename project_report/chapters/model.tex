@@ -1,0 +1,224 @@
+The The quadrotor consists of four motors with propellers, two of them rotating in clockwise and the other two in anti-clockwise direction to compensate for the yaw moment as shown in the figure. the opposite motors rotate in opposite directions to make the pitching and rolling motion easier to attain.
+\begin{figure}[H]
+  \centering
+  \includegraphics{images/quad}
+  \caption{Top view of quadcopter in body frame}
+  \label{fig:quadrotor}
+\end{figure}
+We need a relation between the body fixed frame and the inertial earth frame because the measurements from the quad are with respect to its body fixed frame whereas almost all cases the desired description is in earth's inertial frame.
+\newpage
+  \section{Reference frames}
+    We will use two frames of reference to model the quadcopter.
+\paragraph{Inertial frame}
+  The X,Y,Z oriented along the North, East and Down directions with respect to the earth.
+\paragraph{Body fixed frame}
+  A non inertial frame fixed to the Centre of mass of the quadcopter with the X,Y axis along two perpendicular arms and the Z axis pointing upwards. Figure ~\ref{fig:quadrotor} shows the directions of the axes in the body fixed frame. \\
+
+The relation between both the frames can be derived euler angles. The Euler angles describe rotation about three linearly independent axis. For our model, we choose Z,Y,X as the order of axes. the rotation about z axis(yaw) is denoted by $\psi$, y axis(pitch) by $\theta$ and x axis(roll) by $\phi$.The way the euler angles are defined in space are shown in Figure ~\ref{fig:euler}.\\
+
+\begin{figure}[H]
+  \centering
+  \includegraphics{images/euler_angles}
+  \caption{Euler angles}
+  \label{fig:euler}
+\end{figure}
+
+% \newpage
+The rotations about these axes can be represented with rotation matrices given below. These matrices transform the vector components according to the rotation.
+\begin{equation*}
+R_x = \left[ \begin{matrix}
+      1 & 0 & 0 \\
+      0 & \cos(\phi) & -\sin(\phi)\\
+      0 & \sin(\phi) & \cos(\phi)
+    \end{matrix}
+    \right]
+R_y = \left[ \begin{matrix}
+\cos(\theta) & 0 & -\sin(\theta) \\
+0 & 1 & 0 \\
+\sin(\theta)& 0 & \cos(\theta)
+\end{matrix}
+\right]
+R_z = \left[ \begin{matrix}
+\cos(\psi) & -\sin(\psi) & 0\\
+\sin(\psi) & \cos(\psi) & 0\\
+ 0 & 0 & 1
+\end{matrix}
+\right]
+\end{equation*} \\
+
+Since we are describing the orientation of the quadrotor by successive rotations along Z-Y-X axis, the rotation matrix for the complete three step rotation is :
+\begin{equation*}
+  % \center
+  R_{zyx} & = R_x* R_y *R_z \\
+\end{equation*}
+
+\begin{equation*}
+\center
+R_{zyx} & =\left[ \begin{matrix}
+        \cos(\theta)\cos(\psi) & \sin(\phi)\sin(\theta)\cos(\psi) - \cos(\phi)\sin(\psi)  & \cos(\phi)\sin(\theta)\cos(\psi) - \sin(\phi)\sin(\psi)\\
+        \cos(\theta)\sin(\psi) & \sin(\phi)\sin(\theta)\sin(\psi) - \cos(\phi)\cos(\psi)  & \cos(\phi)\sin(\theta)\sin(\psi) - \sin(\phi)\cos(\psi)\\
+        -\sin(\theta) & \sin(\phi)*\cos(\theta) &\cos(\phi)\cos(\theta)
+      \end{matrix}
+      \right]
+\end{equation*}
+% \newpage
+\section{Relating Thrust and drag to Rotor speed}
+The relationship between the thrust and drag torque of is quadratic. Therefore, the Thrust produced by a motor can be given by the equation
+\begin{equation*}
+  F = b.\Omega^2
+\end{equation*}
+Similarly the relation between the drag torque and the rotor speed is given by
+\begin{equation}
+  \tau_{drag} = d.\Omega^2
+\end{equation}
+Here b and d are constants depending on the motor and propeller properties. Here we neglect the Gyroscopic moments due to the movement of angular velocity vector as the orientation of the quad changes minimally most of the times.\\
+
+Our main control problem is to obtain appropriate inputs for each motor to control the dynamics of the robot. The dynamic equations show that the states are dependent on both thrust and Moments about thr X-Y-Z axes.From the relationships obtained above, we can write the total thrust and torques in terms of rotor speeds as
+\begin{align*}
+  F & = \frac{b}{m}(\Omega_1^2+ \Omega_2^2 + \Omega_3^2 + \Omega_4^2 )\\
+  \tau_x & = lb(\Omega_4^2 - \Omega_2^2)\\
+  \tau_y & = lb(\Omega_3^2 - \Omega_1^2)\\
+  \tau_z & = d(\Omega_1^2 - \Omega_2^2 + \Omega_3^2 - \Omega_4^2)
+\end{align*}
+\section{Kinematics and Dynamics}
+\subsection{Kinematics}
+Let [ x y z ] and [ $\phi$ $\theta$ $\psi$ ] be the vectors representing the position and orientation in the earth frame and et $v_b$ = [$u$ $v$ $w$] and $\omega_b$ = [$p$ $q$ $r$] be linear and angular velocities in the body frame.
+
+We can use the rotation matrix above and the special matrix whose derivation is explained in [3] to obtain the linear and angular velocities in the earth frame by using the transformations $ v_e = R*v_b  $  and $\omega_b$ = $T*\omega_b$
+\begin{equation}
+  T = \left[ \begin{matrix}
+        1 & \sin(\phi)\tan(\phi) & \cos(\theta)\tan(\theta)  \\
+        0 & \cos(\phi) & -\sin(\phi)\\
+        0 & \frac{\sin(\phi)}{\cos(\theta)} & \frac{\cos(\phi)}{\cos(\theta)}
+      \end{matrix}
+      \right]
+\end{equation}
+\subsection{Forces}
+Newton's second law of motion for non-inertial frame can be written as
+\begin{equation*}
+  F = m\dot{v_b}+\omega_b*mv_b
+\end{equation*}
+
+\noindent
+substuting and expanding the cross product, we get
+\begin{equation*}
+  \left[
+  \begin{matrix}
+    F_x \\
+    F_y\\
+    F_z
+  \end{matrix}
+  \right] =m
+  \left[
+  \begin{matrix}
+    \dot{u} +qw -rv \\
+    \dot{v} +ru -pw\\
+    \dot{w} +pv -qu
+  \end{matrix}
+  \right]
+\end{equation*}\\
+
+But the forces acting on the quadrotor in the body frame will be thrust along Z axis and gravity along earth's Z axis. Now the above equation can be written as
+\begin{equation*}
+  R^{-1}\left[
+  \begin{matrix}
+    0\\
+    0\\
+    mg
+  \end{matrix}
+  \right]+
+  \left[
+  \begin{matrix}
+    0 \\
+    0\\
+    F
+  \end{matrix}
+  \right]
+   =m
+  \left[
+  \begin{matrix}
+    \dot{u} +qw -rv \\
+    \dot{v} +ru -pw\\
+    \dot{w} +pv -qu
+  \end{matrix}
+  \right]
+\end{equation*}\\
+
+To get the equation of forces in the Inertial frame. we multiply both the sides with the rotation matrix.
+\begin{equation*}
+  \left[
+  \begin{matrix}
+    0\\
+    0\\
+    mg
+  \end{matrix}
+  \right]+
+  R^T\left[
+  \begin{matrix}
+    0 \\
+    0\\
+    F
+  \end{matrix}
+  \right]
+   =m
+  \left[
+  \begin{matrix}
+    \ddot{x}\\
+    \ddot{y}\\
+    \ddot{z}
+  \end{matrix}
+  \right]
+\end{equation*}
+\subsection{Moments}
+The torque in a rotating frame is given by Euler's equation
+\begin{equation*}
+  \center
+  \tau = \dot{I}\omega + \omega * I
+\end{equation*}
+The moment of inertia tensor along the principle axis reduces to diagonal form in body frame. its given by
+\begin{equation*}
+  I =
+  \left[
+    \begin{matrix}
+      I_x & 0 & 0\\
+      0 & I_y & 0\\
+      0 & 0 & I_z
+    \end{matrix}
+  \right]
+\end{equation*}
+
+\noindent
+Expanding the cross product and simplifying:
+\begin{equation*}
+  \left[
+  \begin{matrix}
+    \tau_x \\
+    \tau_y\\
+    \tau_z
+  \end{matrix}
+  \right] =m
+  \left[
+  \begin{matrix}
+    \dot{p}I_x +qr(I_z - I_y) \\
+    \dot{q}I_y +pr(I_x - I_z)\\
+    \dot{r}I_z +pq(I_y - I_x)
+  \end{matrix}
+  \right]
+\end{equation*}
+
+%\section{Final equations}
+%after simplification and rearranging the equations, we have
+%\begin{align*}
+%  \dot{\phi} &= p + r[\cos(\phi)\tan(\theta)] + q[\sin(\phi)\tan(\theta)] \\
+%  \dot{\theta} & = q\cos(\phi) - r\sin(\phi)\\
+%  \dot{\psi} & = r\frac{\cos(\phi)}{\cos(\theta)} + q\frac{\sin(\phi)}{\cos(\theta)}\\
+%  \dot{p} & = \frac{I_y - I_z}{I_x}rq + \frac{\tau_x}{I_x}\\
+%  \dot{q} & = \frac{I_z - I_x}{I_y}pr + \frac{\tau_y}{I_y}\\
+%  \dot{r} & = \frac{I_x - I_y}{I_z}pq + \frac{\tau_z}{I_z}\\
+%  \dot{u} & = rv - qw - g\sin(\theta)\\
+%  \dot{v} & = pw - ru - g\cos(\theta)\sin(\phi)\\
+%  \dot{w} & = qu - pv - g\cos(\theta)\cos(\phi)\\
+%  \dot{x} & = \cos(\theta)\cos(\psi)u + (\sin(\phi)\sin(\theta)\cos(\psi) - \cos(\phi)\sin(\psi))v +   (\cos(\phi)\sin(\theta)\cos(\psi) - \sin(\phi)\sin(\psi))w\\
+%  \dot{y} & =\cos(\theta)\sin(\psi)u + (\sin(\phi)\sin(\theta)\sin(\psi) - \cos(\phi)\cos(\psi))v + (\cos(\phi)\sin(\theta)\sin(\psi) - \sin(\phi)\cos(\psi))w \\
+%  \dot{z} & = -\sin(\theta)u + \sin(\phi)\cos(\theta)v +\cos(\phi)\cos(\theta)w
+%\end{align*}
